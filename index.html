@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Flyer A4 Gấp Ba – Khung Chuẩn</title>
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
+<!-- Export libs -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<style>
+:root{ --red:#DA1212; --gold:#FFD700; --blue:#0B3D91 }
+*{ box-sizing:border-box }
+html,body{ margin:0; padding:0; background:#f4f4f5; font-family:Roboto,system-ui,-apple-system,sans-serif }
+
+.container{ max-width:1200px; margin:16px auto; padding:8px }
+.actions{ display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin:10px 0 16px }
+button{ padding:10px 14px; border:0; border-radius:10px; cursor:pointer; font-weight:700; box-shadow:0 2px 6px rgba(0,0,0,.15) }
+.btn-dark{ background:#111; color:#fff }
+.hint{ text-align:center; font-size:12px; color:#666; margin-top:4px }
+
+.title{ font-family:"Playfair Display",serif; text-align:center; margin:8px 0 6px }
+
+.sheet{
+  width:297mm; height:210mm; background:#fff; 
+  margin:12px auto; display:flex; gap:0; 
+  border:1px solid #e5e7eb; position:relative;
+}
+
+/* 3 panel mỗi mặt */
+.panel{
+  width:99mm; height:210mm; padding:10mm; position:relative;
+  display:flex; flex-direction:column; gap:6mm; overflow:hidden;
+  background:#fff;
+}
+
+/* Đường gấp hiển thị khi xem, ẩn khi in */
+.guides .panel{ border-right:1px dashed #c9c9c9 }
+.guides .panel:last-child{ border-right:none }
+
+/* Style chữ mặc định */
+.h1{ font-family:"Playfair Display",serif; font-size:22pt; color:var(--red); margin:0 }
+.h2{ font-weight:700; color:var(--blue); margin:0 }
+.p { font-size:11pt; line-height:1.5; text-align:justify; margin:0 }
+
+/* Nhãn panel để không nhầm vị trí trong lúc điền nội dung */
+.label{
+  position:absolute; top:4mm; left:4mm; font-size:9pt;
+  background:#000; color:#fff; padding:.15em .5em; border-radius:6px; opacity:.8
+}
+
+/* Hộp nội dung dễ nhìn */
+.card{ background:#fafafa; border:1px solid #eee; border-radius:10px; padding:8mm }
+
+/* PRINT */
+@page { size: A4 landscape; margin: 0 }
+@media print{
+  body{ background:#fff }
+  .actions,.title,.hint{ display:none }
+  .sheet{ margin:0; border:0 }
+  .guides .panel{ border-right:none }
+  .label{ display:none }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="actions">
+    <button class="btn-dark" id="btnPdf">📥 Tải PDF (A4 – 2 trang)</button>
+    <button id="btnJpgBack">📸 JPG – Mặt Ngoài</button>
+    <button id="btnJpgFront">📸 JPG – Mặt Trong</button>
+  </div>
+
+  <h2 class="title">🟥 Mặt Ngoài (Back) – Thứ tự gấp: 5 | 6 | 1</h2>
+  <div class="sheet guides" id="flyerBack" aria-label="Back">
+    <!-- Panel-5: gập vào trong cùng -->
+    <div class="panel" id="panel5" style="background-color: #FE4D4D;">
+      <!-- <div class="label">panel-5 (gập vào)</div> -->
+      <!-- TODO: ảnh nền (tuỳ chọn) -->
+      <!-- <img src="./images/bg5.jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.15"> -->
+      <div class="h2">CÁI GIÁ ĐẮT ĐỎ</div>
+      <!-- Top Image -->
+      <img src="Bia5.png" alt="Bìa" style="width: 100%; height: 70mm; object-fit: cover; border-radius: 10px;">
+      <div class="p">Sử dụng chất kích thích là cánh cửa dẫn đến những bi kịch không ai mong muốn, hủy hoại từng phần cuộc sống của bạn:Sức khỏe tan tành: Gan, thận, tim, phổi... tất cả đều bị tàn phá. Hệ miễn dịch suy yếu, nguy cơ mắc các bệnh truyền nhiễm (HIV/AIDS, viêm gan B, C) tăng cao.
+Tâm trí u tối: Gây rối loạn tâm thần, trầm cảm, lo âu, ảo giác, mất kiểm soát hành vi. Bạn không còn là chính mình, mà bị điều khiển bởi chất gây nghiện.
+    Tài chính kiệt quệ: Tiền bạc đội nón ra đi nhanh chóng để thỏa mãn cơn nghiện, dẫn đến nợ nần, trộm cắp, bán rẻ danh dự.
+Mất đi chính mình: Từ một người có ước mơ, hoài bão, bạn trở thành nô lệ của chất kích thích, đánh mất giá trị bản thân, sự tự trọng và niềm tin của mọi người."</div>
+
+    </div>
+
+    <!-- Panel-6: lưng -->
+    <div class="panel" id="panel6" >
+      <!-- <div class="label">panel-6 (lưng)</div> -->
+      <div class="h2">THỰC TRẠNG HIỆN NAY</div>
+      <div class="p">Thực trạng đáng báo động nhất trong những năm gần đây là sự chuyển dịch từ các loại ma túy truyền thống sang ma túy tổng hợp và các chất hướng thần mới như "nước vui", "bóng cười" (khí N2O), hay các loại ma túy trá hình dưới dạng thực phẩm, đồ uống, thuốc lá điện tử. Những chất này thường gây ảo giác mạnh, hoang tưởng, loạn thần, và có thể dẫn đến hành vi bạo lực, nguy hiểm cho bản thân và xã hội. Giới trẻ (dưới 30 tuổi) đang chiếm tỷ lệ ngày càng cao trong số người sử dụng ma túy, đặc biệt là MTS. Các báo cáo cho thấy có tới 70-80% số người nghiện mới là người trẻ tuổi. Độ tuổi trung bình của người sử dụng ma túy đang có xu hướng giảm, thậm chí có những trường hợp chỉ mới 13-15 tuổi đã tiếp xúc và sử dụng ma túy. Đây là mối hiểm họa lớn đối với tương lai của đất nước.</div>
+      <ul class="p" style="margin:4mm 0 0 16px">
+      </ul>
+    </div>
+
+    <!-- Panel-1: bìa -->
+    <div class="panel" id="panel1" style="text-align: center; justify-content: space-between; gap: 0; background-color: #FE8484">
+      
+      <!-- Top Image -->
+      <img src="Bia1.png" alt="Bìa" style="width: 100%; height: 70mm; object-fit: cover; border-radius: 10px;">
+      
+      <!-- Middle Content -->
+      <div>
+        <div class="h1"><b> <span style="color:var(--blue)">HÃY CHỌN TƯƠNG LAI</span> KHÔNG PHẢI CHẤT KÍCH THÍCH</b></div>
+      </div>
+      
+      <!-- Bottom QR Code -->
+      <img src="./qr.png" alt="QR Code" style="width: 40mm; height: 40mm; margin: 0 auto; object-fit: contain;">
+    </div>
+  </div>
+  <div class="hint">Gợi ý: panel-5 sẽ nằm bên trái, panel-6 ở giữa, panel-1 là bìa bên phải.</div>
+
+  <h2 class="title">🟨 Mặt Trong (Front) – Thứ tự: 2 | 3 | 4</h2>
+  <div class="sheet guides" id="flyerFront" aria-label="Front">
+    <!-- Panel-2: trái -->
+    <div class="panel" id="panel2" style="padding: 0;">
+      <img src="final.png" alt="Bìa" style="width: 100%; height: 100%; object-fit: cover;">
+    </div>
+
+    <!-- Panel-3: giữa -->
+    <div class="panel" id="panel3">
+      <!-- <div class="label">panel-3 (giữa)</div> -->
+      <div class="h2">HƯỚNG ĐẾN TƯƠNG LAI TƯƠI SÁNG</div>
+      <img src="Bia7.png" alt="Bìa" style="width: 100%; height: 70mm; object-fit: cover; border-radius: 10px;">
+      <!-- TODO: ảnh minh hoạ nhỏ -->
+       <div class="p">Dù bạn đang ở đâu trên hành trình cuộc đời, dù bạn đã từng lầm lỡ hay chưa, hãy nhớ rằng:
+Bạn CÓ QUYỀN LỰA CHỌN: Lựa chọn sống khỏe mạnh, sống có ích, sống trọn vẹn với những người mình yêu thương.
+Bạn CÓ SỨC MẠNH: Sức mạnh để nói KHÔNG, sức mạnh để vượt qua cám dỗ, sức mạnh để làm lại từ đầu.
+Đừng ngần ngại tìm kiếm sự giúp đỡ: Hãy chia sẻ với gia đình, bạn bè, thầy cô, hoặc các tổ chức hỗ trợ. Bạn không hề đơn độc!
+Mỗi ngày là một cơ hội: Để thay đổi, để hàn gắn, để xây dựng lại những gì đã mất. Hãy đặt mục tiêu, kiên trì theo đuổi và tin vào bản thân.
+Hãy là người hùng của chính mình: Trở thành phiên bản tốt đẹp nhất của bản thân, là niềm tự hào của gia đình và đóng góp vào một cộng đồng văn minh, khỏe mạnh."
+      </div>
+    </div>
+
+    <!-- Panel-4: phải -->
+    <div class="panel" id="panel4" style = "background-color: #FE4D4D;">
+      <!-- <div class="label">panel-4 (phải)</div> -->
+      <div class="h2">NỖI ĐAU KHÔNG CỦA RIÊNG AI</div>
+      <img src="Bia4.png" alt="Bìa" style="width: 100%; height: 70mm; object-fit: cover; border-radius: 10px;">
+      <div class="p">Tác hại của chất kích thích không chỉ dừng lại ở cá nhân người sử dụng, mà còn lan rộng như một vết dầu loang, tàn phá những gì thiêng liêng nhất:
+Gia đình tan vỡ: Hạnh phúc, bình yên của tổ ấm bị phá hủy
+Mầm mống tội ác: Để có tiền sử dụng chất kích thích, nhiều người sẵn sàng phạm tội (trộm cắp, cướ[] giật, lừa đảo...). Gây mất an ninh trật tự xã hội.
+Gánh nặng xã hội: Chi phí điều trị, cai nghiện tốn kém. Nguồn lực xã hội bị lãng phí. Hình ảnh đất nước, con người bị ảnh hưởng.
+Mất đi tương lai thế hệ: Khi những người trẻ sa ngã, tương lai của cả một thế hệ bị đe dọa.</div>
+    </div>
+      <!-- TODO: QR (tuỳ chọn) -->
+      <!-- <img src="./images/qr.png" alt="QR" style="width:28mm;height:28mm;margin-top:4mm"> -->
+    </div>
+  </div>
+  <div class="hint">Khi in, đường gấp (dashed) và nhãn panel sẽ tự ẩn.</div>
+</div>
+
+<script>
+const $ = s => document.querySelector(s);
+
+async function capture(node){
+  return await html2canvas(node, {scale:3, backgroundColor:'#ffffff', useCORS:true, allowTaint:true});
+}
+async function savePDF(){
+  const { jsPDF } = window.jspdf;
+  const pdf = new jsPDF({orientation:'landscape', unit:'mm', format:'a4'});
+  const W=297, H=210;
+
+  const back  = await capture($('#flyerBack'));
+  pdf.addImage(back.toDataURL('image/jpeg',0.95),'JPEG',0,0,W,H);
+
+  pdf.addPage();
+  const front = await capture($('#flyerFront'));
+  pdf.addImage(front.toDataURL('image/jpeg',0.95),'JPEG',0,0,W,H);
+
+  pdf.save('Flyer_A4_ZFold.pdf');
+}
+async function saveJPG(node, name){
+  const c = await capture(node);
+  const a = document.createElement('a');
+  a.href = c.toDataURL('image/jpeg',0.95);
+  a.download = name;
+  a.click();
+}
+
+$('#btnPdf').addEventListener('click', savePDF);
+$('#btnJpgBack').addEventListener('click', ()=>saveJPG($('#flyerBack'),  'Flyer_MatNgoai.jpg'));
+$('#btnJpgFront').addEventListener('click', ()=>saveJPG($('#flyerFront'), 'Flyer_MatTrong.jpg'));
+</script>
+</body>
+</html>
